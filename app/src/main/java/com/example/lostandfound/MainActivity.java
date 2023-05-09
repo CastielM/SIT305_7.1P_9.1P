@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.lostandfound.databinding.ActivityMainBinding;
+
+
 public class MainActivity extends AppCompatActivity {
 
     Button newAdvertButton;
     Button viewListingsButton;
     TextView welcomeText;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
         viewListingsButton = findViewById(R.id.viewListings);
         welcomeText = findViewById(R.id.welcomeText);
 
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        //sets up button to go to Form Activity
         newAdvertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -32,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        //sets up button to go to Listings activity
         viewListingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
