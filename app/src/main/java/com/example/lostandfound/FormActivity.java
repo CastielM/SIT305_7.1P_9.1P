@@ -21,7 +21,7 @@ public class FormActivity extends AppCompatActivity {
     ActivityFormBinding bindingForm;
     DatabaseHelper databaseHelper;
 
-
+    String inputPostType;
 
 
     @Override
@@ -46,18 +46,34 @@ public class FormActivity extends AppCompatActivity {
                 String inputLocation =  bindingForm.inputLocation.getText().toString();
                 String inputDate =  bindingForm.inputDate.getText().toString();
 
+                //Checks which radio button is checked
+                int checkRadioButton = bindingForm.radioGroup.getCheckedRadioButtonId();
+                if (checkRadioButton == R.id.foundButton)
+                {
+                    inputPostType = "Found";
+                }
+                else if (checkRadioButton == R.id.lostButton)
+                {
+                    inputPostType = "Lost";
+                }
+
+                if (inputName.length() == 0 || inputPhone.length() == 0 || inputDescription.length() == 0 || inputLocation.length() == 0 || inputDate.length() == 0 || checkRadioButton < 0)
+                {
+                    Toast.makeText(FormActivity.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    contentValues.put("name", inputName);
+                    contentValues.put("phone", inputPhone);
+                    contentValues.put("description", inputDescription);
+                    contentValues.put("location", inputLocation);
+                    contentValues.put("date", inputDate);
+                    contentValues.put("post_type", inputPostType);
 
 
-                contentValues.put("name", inputName);
-                contentValues.put("phone", inputPhone);
-                contentValues.put("description", inputDescription);
-                contentValues.put("location", inputLocation);
-                contentValues.put("date", inputDate);
-                //contentValues.put("post_type", inputPostType);
-
-
-                db.insert("lostandfound", null, contentValues);
-
+                    db.insert("lostandfound", null, contentValues);
+                    Toast.makeText(FormActivity.this, "Successfully posted", Toast.LENGTH_LONG).show();
+                    finish();
+                }
 
             }
 

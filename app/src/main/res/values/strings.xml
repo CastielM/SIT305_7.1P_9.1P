@@ -11,7 +11,7 @@
     <string name="descriptionText">Description:</string>
     <string name="dateText">Date:</string>
     <string name="locationText">Location:</string>
-    <string name="saveButton">Save</string>
+    <string name="saveButton">POST</string>
     <string name="listingsText">LOST &amp; FOUND ITEMS</string>
 
 
