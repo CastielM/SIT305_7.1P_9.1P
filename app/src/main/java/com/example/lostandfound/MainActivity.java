@@ -30,11 +30,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(gotoForm);
             }
 
-        }
+        });
 
+        viewListingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent gotoListings = new Intent(MainActivity.this, ListActivity.class);
+                startActivity(gotoListings);
+            }
 
-
-        );
+        });
 
 
 
