@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">LostAndFound</string>
+    <string name="app_name">Lost and Found</string>
+    <string name="newAdvert">CREATE A NEW ADVERT</string>
+    <string name="viewListings">SHOW ALL LOST &amp; FOUND ITEMS</string>
+    <string name="welcomeText">Welcome to The Lost and Found App! \n\nChoose an option below</string>
+    <string name="postTypeText">Post Type:</string>
+    <string name="foundRadioButton">Found</string>
+    <string name="lostRadioButton">Lost</string>
+    <string name="nameText">Name:</string>
+    <string name="phoneText">Phone:</string>
+    <string name="descriptionText">Description:</string>
+    <string name="dateText">Date:</string>
+    <string name="locationText">Location:</string>
+    <string name="saveButton">Save</string>
+
+
+
+
 </resources>
