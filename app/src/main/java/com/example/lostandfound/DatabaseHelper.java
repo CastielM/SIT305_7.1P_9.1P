@@ -16,12 +16,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
+
+        db.execSQL("CREATE TABLE lostandfound (name TEXT PRIMARY KEY, phone TEXT , description TEXT, date DATE, location TEXT, post_type TEXT)");
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLE IF EXISTS lostandfound.db");
 
     }
 }
