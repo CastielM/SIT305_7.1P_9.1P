@@ -44,40 +44,16 @@ public class ListActivity extends AppCompatActivity implements DataListener{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        dataRecyclerView = findViewById(R.id.recyclerview);
-
-        databaseHelper = new DatabaseHelper(this);
-
-        lostAndFoundData = new ArrayList<>();
-
-        dataAdapter = new dataAdapter(this, lostAndFoundData, this);
-        layoutManager = new LinearLayoutManager(this);
-
-        dataRecyclerView.setAdapter(dataAdapter);
-        dataRecyclerView.setLayoutManager(layoutManager);
-
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
-        //adds each post_type and description to the table
-        Cursor cursor = db.query("lostandfound", null, null, null, null, null, null);
-
-        while (cursor.moveToNext()) {
-            int index = cursor.getColumnIndex("post_type");
-            postType = cursor.getString(index);
-            index = cursor.getColumnIndex("description");
-            description = cursor.getString(index);
-            index = cursor.getColumnIndex("id");
-            database_id = cursor.getInt(index);
-            lostAndFoundData.add(new DataModel(postType, description, database_id));
-        }
-
-        db.close();
-
-
-
+        displayData();
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        displayData();
+    }
+
     //Code to close activity when back button on menu bar is pressed, courtesy of stackoverflow
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -108,6 +84,36 @@ public class ListActivity extends AppCompatActivity implements DataListener{
         Intent gotoData = new Intent(ListActivity.this, MoreInfoActivity.class);
         gotoData.putExtra("database_id", data.database_id);
         startActivity(gotoData);
+    }
+
+    public void displayData()
+    {
+        lostAndFoundData = new ArrayList<>();
+
+        dataRecyclerView = findViewById(R.id.recyclerview);
+
+        databaseHelper = new DatabaseHelper(this);
+
+        dataAdapter = new dataAdapter(this, lostAndFoundData, this);
+        layoutManager = new LinearLayoutManager(this);
+
+        dataRecyclerView.setAdapter(dataAdapter);
+        dataRecyclerView.setLayoutManager(layoutManager);
+
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        //adds each post_type and description to the table
+        Cursor cursor = db.query("lostandfound", null, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            int index = cursor.getColumnIndex("post_type");
+            postType = cursor.getString(index);
+            index = cursor.getColumnIndex("description");
+            description = cursor.getString(index);
+            index = cursor.getColumnIndex("id");
+            database_id = cursor.getInt(index);
+            lostAndFoundData.add(new DataModel(postType, description, database_id));
+        }
     }
 }
 

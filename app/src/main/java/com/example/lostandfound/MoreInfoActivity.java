@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.lostandfound.databinding.ActivityMoreInfoBinding;
 
@@ -76,6 +77,16 @@ public class MoreInfoActivity extends AppCompatActivity {
         bindingInfo.infoDescription.setText(descriptionValue);
         bindingInfo.infoLocation.setText("at " + locationValue);
         bindingInfo.infoPostType.setText(postValue);
+
+        bindingInfo.removeButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                db.delete("lostandfound", "id=?", new String[]{String.valueOf(id)});
+                finish();
+            }
+        });
 
 
     }

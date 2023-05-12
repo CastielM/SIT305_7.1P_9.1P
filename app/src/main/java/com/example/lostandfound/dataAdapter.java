@@ -34,7 +34,6 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder>{
 
     }
 
-
     @NonNull
     @Override
     public dataAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,7 +62,9 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder>{
             }
         });
 
+
     }
+
     @Override
     public int getItemCount() {
         return lostAndFoundData.size();
