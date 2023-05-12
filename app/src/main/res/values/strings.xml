@@ -12,7 +12,7 @@
     <string name="dateText">Date:</string>
     <string name="locationText">Location:</string>
     <string name="saveButton">POST</string>
-    <string name="listingsText">LOST &amp; FOUND ITEMS</string>
+    <string name="listingsText"><u>LOST &amp; FOUND ITEMS</u></string>
 
 
 

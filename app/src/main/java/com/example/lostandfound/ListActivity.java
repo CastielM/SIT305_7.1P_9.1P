@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.lostandfound.databinding.ActivityFormBinding;
 
@@ -48,6 +50,7 @@ public class ListActivity extends AppCompatActivity {
 
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
+        //adds each post_type and description to the table
         Cursor cursor = db.query("lostandfound", null, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
@@ -55,6 +58,7 @@ public class ListActivity extends AppCompatActivity {
             postType = cursor.getString(index);
             index =cursor.getColumnIndex("description");
             description = cursor.getString(index);
+
             lostAndFoundData.add(new DataModel(postType, description));
         }
 
@@ -71,7 +75,5 @@ public class ListActivity extends AppCompatActivity {
 
         return count;
     }
-
-
 
 }

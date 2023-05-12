@@ -1,7 +1,9 @@
 package com.example.lostandfound;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder>{
 
 
     Context MyContext;
     ArrayList<DataModel> lostAndFoundData;
+
 
     public dataAdapter(Context myContext, ArrayList<DataModel> lostAndFoundData) {
         MyContext = myContext;
@@ -34,8 +38,17 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull dataAdapter.MyViewHolder holder, int position) {
 
+        holder.posttype.setTextColor(Color.parseColor("#32CD32"));
+        if (Objects.equals(lostAndFoundData.get(position).getPostType(), "Lost"))
+        {
+            holder.posttype.setTextColor(Color.parseColor("#DC143C"));
+            Log.i("colourtest", "Red");
+        }
+
+
         holder.posttype.setText(lostAndFoundData.get(position).getPostType());
         holder.description.setText(lostAndFoundData.get(position).getDescription());
+
 
     }
 
