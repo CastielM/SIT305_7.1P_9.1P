@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.lostandfound.databinding.ActivityFormBinding;
 
@@ -19,6 +22,13 @@ public class ListActivity extends AppCompatActivity {
 
     dataAdapter dataAdapter;
 
+    DatabaseHelper databaseHelper;
+
+    String postType;
+    String description;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,18 +36,9 @@ public class ListActivity extends AppCompatActivity {
 
         dataRecyclerView = findViewById(R.id.recyclerview);
 
+        databaseHelper = new DatabaseHelper(this);
+
         lostAndFoundData = new ArrayList<>();
-
-
-        for (int i = 0; i < 10; i++ )
-        {
-            //TODO this needs to pull from database
-            String posttype = "Name " + Integer.toString(i);
-            String description = "This is description number " + Integer.toString(i);
-            int id = i;
-            lostAndFoundData.add(new DataModel(posttype, description, id));
-        }
-
 
         dataAdapter = new dataAdapter(this, lostAndFoundData);
         layoutManager = new LinearLayoutManager(this);
@@ -45,7 +46,32 @@ public class ListActivity extends AppCompatActivity {
         dataRecyclerView.setAdapter(dataAdapter);
         dataRecyclerView.setLayoutManager(layoutManager);
 
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        Cursor cursor = db.query("lostandfound", null, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            int index = cursor.getColumnIndex("post_type");
+            postType = cursor.getString(index);
+            index =cursor.getColumnIndex("description");
+            description = cursor.getString(index);
+            lostAndFoundData.add(new DataModel(postType, description));
+        }
+
+
 
 
     }
+
+    public int getLength(String tableName)
+    {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        Cursor cursor = db.query(tableName, null, null, null, null, null, null);
+        int count = cursor.getCount();
+
+        return count;
+    }
+
+
+
 }
