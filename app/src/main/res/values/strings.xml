@@ -13,6 +13,7 @@
     <string name="locationText">Location:</string>
     <string name="saveButton">POST</string>
     <string name="listingsText"><u>LOST &amp; FOUND ITEMS</u></string>
+    <string name="removeButton">DELETE</string>
 
 
 </resources>

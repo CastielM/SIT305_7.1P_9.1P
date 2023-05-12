@@ -72,6 +72,8 @@ public class ListActivity extends AppCompatActivity implements DataListener{
             lostAndFoundData.add(new DataModel(postType, description, database_id));
         }
 
+        db.close();
+
 
 
 
