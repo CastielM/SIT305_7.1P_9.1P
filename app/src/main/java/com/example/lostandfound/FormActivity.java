@@ -11,9 +11,6 @@ import android.widget.Toast;
 
 import com.example.lostandfound.databinding.ActivityFormBinding;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 
 public class FormActivity extends AppCompatActivity {
