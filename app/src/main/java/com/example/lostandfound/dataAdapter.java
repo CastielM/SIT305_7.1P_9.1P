@@ -24,7 +24,6 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder>{
     }
 
 
-
     @NonNull
     @Override
     public dataAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,7 +52,7 @@ public class dataAdapter extends RecyclerView.Adapter<dataAdapter.MyViewHolder>{
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             posttype = itemView.findViewById(R.id.posttype);
-            description = itemView.findViewById(R.id.posttype);
+            description = itemView.findViewById(R.id.description);
 
         }
     }

@@ -5,6 +5,18 @@ public class DataModel {
     String postType;
     String description;
 
+    int id;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     public String getPostType() {
         return postType;
     }
@@ -21,9 +33,10 @@ public class DataModel {
         this.description = description;
     }
 
-    public DataModel(String postType, String description) {
+    public DataModel(String postType, String description, int id) {
         this.postType = postType;
         this.description = description;
+        this.id = id;
     }
 
 

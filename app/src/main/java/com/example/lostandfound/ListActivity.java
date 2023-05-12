@@ -34,7 +34,8 @@ public class ListActivity extends AppCompatActivity {
             //TODO this needs to pull from database
             String posttype = "Name " + Integer.toString(i);
             String description = "This is description number " + Integer.toString(i);
-            lostAndFoundData.add(new DataModel(posttype, description));
+            int id = i;
+            lostAndFoundData.add(new DataModel(posttype, description, id));
         }
 
 
