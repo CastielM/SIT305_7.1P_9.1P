@@ -1,6 +1,7 @@
 package com.example.lostandfound;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -9,6 +10,9 @@ import android.view.View;
 
 import com.example.lostandfound.databinding.ActivityMainBinding;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 // CastielM
 //student ID: 220222729
 //Unit SIT305
@@ -16,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-    RecyclerView dataRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-        dataRecyclerView = findViewById(R.id.RecyclerView);
-
-
-
 
     }
 }
