@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 
 public class ListActivity extends AppCompatActivity {
-    ActivityFormBinding bindingList;
-
     RecyclerView dataRecyclerView;
     RecyclerView.LayoutManager layoutManager;
 
@@ -21,25 +19,24 @@ public class ListActivity extends AppCompatActivity {
 
     dataAdapter dataAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        bindingList = ActivityFormBinding.inflate(getLayoutInflater());
-        setContentView(bindingList.getRoot());
-
+        dataRecyclerView = findViewById(R.id.recyclerview);
 
         lostAndFoundData = new ArrayList<>();
 
-        for (int i = 0; i > 10; i++ )
+
+        for (int i = 0; i < 10; i++ )
         {
             //TODO this needs to pull from database
-            lostAndFoundData.add(new DataModel("name " + Integer.toString(i), "this is description number " + Integer.toString(i)));
+            String posttype = "Name " + Integer.toString(i);
+            String description = "This is description number " + Integer.toString(i);
+            lostAndFoundData.add(new DataModel(posttype, description));
         }
 
-        dataRecyclerView = findViewById(R.id.recyclerview);
 
         dataAdapter = new dataAdapter(this, lostAndFoundData);
         layoutManager = new LinearLayoutManager(this);
