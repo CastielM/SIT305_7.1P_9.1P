@@ -38,6 +38,9 @@ public class FormActivity extends AppCompatActivity {
 
     String inputPostType;
 
+    double latVal;
+    double longVal;
+
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
 
@@ -100,6 +103,8 @@ public class FormActivity extends AppCompatActivity {
                     contentValues.put("location", inputLocation);
                     contentValues.put("date", inputDate);
                     contentValues.put("post_type", inputPostType);
+                    contentValues.put("latitude", latVal);
+                    contentValues.put("longitude", longVal);
 
 
                     db.insert("lostandfound", null, contentValues);
@@ -133,11 +138,14 @@ public class FormActivity extends AppCompatActivity {
                                 Geocoder geocoder = new Geocoder(FormActivity.this, Locale.getDefault());
                                 List<Address> addresses;
                                 try {
-                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                    latVal = location.getLatitude();
+                                    longVal = location.getLongitude();
+                                    addresses = geocoder.getFromLocation(latVal,longVal, 1);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
                                 String addressName = addresses.get(0).getAddressLine(0);
+
                                 bindingForm.inputLocation.setText(addressName);
                                 //TODO will have to add lat and long to database so that markers can be used, use REAL datatype.
 
