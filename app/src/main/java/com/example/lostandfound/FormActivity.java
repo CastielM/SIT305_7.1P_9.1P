@@ -147,7 +147,6 @@ public class FormActivity extends AppCompatActivity {
                                 String addressName = addresses.get(0).getAddressLine(0);
 
                                 bindingForm.inputLocation.setText(addressName);
-                                //TODO will have to add lat and long to database so that markers can be used, use REAL datatype.
 
                             }
                         }
