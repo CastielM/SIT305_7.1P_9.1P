@@ -69,16 +69,6 @@ public class ListActivity extends AppCompatActivity implements DataListener{
         return true;
     }
 
-    //gets length of database
-    public int getLength(String tableName)
-    {
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        Cursor cursor = db.query(tableName, null, null, null, null, null, null);
-        int count = cursor.getCount();
-
-        return count;
-    }
-
     @Override
     public void onItemClick(DataModel data) {
         Intent gotoData = new Intent(ListActivity.this, MoreInfoActivity.class);
