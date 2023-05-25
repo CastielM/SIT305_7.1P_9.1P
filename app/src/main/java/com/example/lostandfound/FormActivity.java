@@ -1,18 +1,34 @@
 package com.example.lostandfound;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.lostandfound.databinding.ActivityFormBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
 public class FormActivity extends AppCompatActivity {
@@ -21,6 +37,9 @@ public class FormActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
 
     String inputPostType;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
 
 
     @Override
@@ -34,6 +53,18 @@ public class FormActivity extends AppCompatActivity {
 
         bindingForm = ActivityFormBinding.inflate(getLayoutInflater());
         setContentView(bindingForm.getRoot());
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        bindingForm.currentLocation.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                getCurrentLocation();
+
+
+            }
+        });
 
         bindingForm.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +115,50 @@ public class FormActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void getCurrentLocation()
+    {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+        }
+        else {
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null)
+                            {
+                                Geocoder geocoder = new Geocoder(FormActivity.this, Locale.getDefault());
+                                List<Address> addresses;
+                                try {
+                                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                String addressName = addresses.get(0).getAddressLine(0);
+                                bindingForm.inputLocation.setText(addressName);
+                                //TODO will have to add lat and long to database so that markers can be used, use REAL datatype.
+
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                getCurrentLocation();
+            }
+        }
     }
     //Code to close activity when back button on menu bar is pressed, courtesy of stackoverflow
     @Override

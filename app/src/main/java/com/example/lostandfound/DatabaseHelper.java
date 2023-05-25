@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //made all inputs text due to simplistic data types with SQLite, data validation will happen from Java end
-        db.execSQL("CREATE TABLE lostandfound (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT , description TEXT, date TEXT, location TEXT, post_type TEXT)");
+        db.execSQL("CREATE TABLE lostandfound (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT , description TEXT, date TEXT, location TEXT, latitude REAL, longitude REAL, post_type TEXT)");
 
     }
 
