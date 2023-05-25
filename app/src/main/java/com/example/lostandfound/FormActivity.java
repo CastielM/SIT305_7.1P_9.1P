@@ -71,7 +71,7 @@ public class FormActivity extends AppCompatActivity {
             Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
         }
 
-        bindingForm.inputLocation.setOnClickListener(new View.OnClickListener() {
+        bindingForm.searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG);

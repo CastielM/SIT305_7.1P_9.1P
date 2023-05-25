@@ -15,8 +15,9 @@
     <string name="listingsText"><u>LOST &amp; FOUND ITEMS</u></string>
     <string name="removeButton">DELETE</string>
     <string name="showMapButton">SHOW ON MAP</string>
-    <string name="currentLocationButton">GET CURRENT LOCATION</string>
+    <string name="currentLocationButton">USE CURRENT LOCATION</string>
     <string name="zoomCamera">FIND ITEMS \nNEAR ME</string>
+    <string name="searchButton">SEARCH</string>
 
 
 
