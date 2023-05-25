@@ -1,11 +1,14 @@
 package com.example.lostandfound;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,8 +28,14 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,6 +66,24 @@ public class FormActivity extends AppCompatActivity {
         bindingForm = ActivityFormBinding.inflate(getLayoutInflater());
         setContentView(bindingForm.getRoot());
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if(!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
+        }
+
+        bindingForm.inputLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.OVERLAY, fields).build(FormActivity.this);
+                googleAutocomplete.launch(intent);
+            }
+        });
+
+
+
+
 
         bindingForm.currentLocation.setOnClickListener(new View.OnClickListener()
         {
@@ -180,4 +207,28 @@ public class FormActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
-}
+
+    private final ActivityResultLauncher<Intent> googleAutocomplete = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK)
+                {
+                    Intent intent = result.getData();
+                    if (intent != null)
+                    {
+                        Place place = Autocomplete.getPlaceFromIntent(intent);
+                        Geocoder geocoder = new Geocoder(FormActivity.this, Locale.getDefault());
+                        List<Address> addresses;
+                        try {
+                            latVal = place.getLatLng().latitude;
+                            longVal = place.getLatLng().longitude;
+                            addresses = geocoder.getFromLocation(latVal,longVal, 1);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        String addressName = addresses.get(0).getAddressLine(0);
+                        bindingForm.inputLocation.setText(addressName);
+                    }
+                }
+            });
+    }
