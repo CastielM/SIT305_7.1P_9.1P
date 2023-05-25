@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -56,5 +57,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 }
