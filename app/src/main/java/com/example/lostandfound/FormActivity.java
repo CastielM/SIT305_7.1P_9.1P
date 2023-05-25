@@ -208,6 +208,8 @@ public class FormActivity extends AppCompatActivity {
         return true;
     }
 
+    //function that runs the autocomplete, gets the lat and lang from selection and uses geocoder to get address (so that address format is consistent with
+    //the get current location function
     private final ActivityResultLauncher<Intent> googleAutocomplete = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
